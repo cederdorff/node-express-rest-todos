@@ -4,7 +4,15 @@
 import * as todosData from "../data/todos.js";
 
 export function getAllTodos(req, res) {
-  res.json(todosData.getAllTodos());
+  let todos = todosData.getAllTodos();
+
+  // ?completed=true or ?completed=false — GET /todos?completed=true
+  if (req.query.completed !== undefined) {
+    const completed = req.query.completed === "true";
+    todos = todos.filter((todo) => todo.completed === completed);
+  }
+
+  res.json(todos);
 }
 
 export function getTodoById(req, res) {
